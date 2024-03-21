@@ -1,14 +1,12 @@
--- Initial
-DROP TABLE IF EXISTS numbers;
+-- Create function SafeDiv that divides (and returns) the first by the second number
+-- or returns 0 if second number is equal to 0
+DELIMITER //
 
-CREATE TABLE IF NOT EXISTS numbers (
-    a int default 0,
-    b int default 0
-);
+DROP FUNCTION IF EXISTS SafeDiv;
+CREATE FUNCTION SafeDiv(a INT, b INT)
+RETURNS FLOAT DETERMINISTIC
+BEGIN
+	RETURN (IF (b = 0, 0, a / b));
+END //
 
-INSERT INTO numbers (a, b) VALUES (10, 2);
-INSERT INTO numbers (a, b) VALUES (4, 5);
-INSERT INTO numbers (a, b) VALUES (2, 3);
-INSERT INTO numbers (a, b) VALUES (6, 3);
-INSERT INTO numbers (a, b) VALUES (7, 0);
-INSERT INTO numbers (a, b) VALUES (6, 8);
+DELIMITER ;
